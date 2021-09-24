@@ -476,18 +476,21 @@ $EdgePanel.controls.AddRange(@($EnableEdgePDFTakeover,$DisableEdgePDFTakeover,$E
 $DarkThemePanel.controls.AddRange(@($Theme,$DisableDarkMode,$EnableDarkMode))
 $OtherPanel.controls.AddRange(@($Other,$RemoveOnedrive,$InstallNet35,$UnpinStartMenuTiles,$DisableTelemetry,$RemoveRegkeys))
 
-$DebloatFolder = "C:\Temp\Windows10Debloater"
+#This allows it so that if you have your TEMP folder in a different spot, it can work
+$DebloatFolder = "$env:TEMP\Windows10Debloater"
+
+#If/Else Loop to check folder
 If (Test-Path $DebloatFolder) {
-    Write-Host "${DebloatFolder} exists. Skipping."
+    Write-Output "$DebloatFolder exists. Skipping."
 }
 Else {
-    Write-Host "The folder ${DebloatFolder} doesn't exist. This folder will be used for storing logs created after the script runs. Creating now."
+    Write-Output "The folder '$DebloatFolder' doesn't exist. This folder will be used for storing logs created after the script runs. Creating now."
     Start-Sleep 1
-    New-Item -Path "${DebloatFolder}" -ItemType Directory
-    Write-Host "The folder ${DebloatFolder} was successfully created."
+    New-Item -Path "$DebloatFolder" -ItemType Directory
+    Write-Output "The folder $DebloatFolder was successfully created."
 }
 
-Start-Transcript -OutputDirectory "${DebloatFolder}"
+Start-Transcript -OutputDirectory "$DebloatFolder"
 
 Write-Output "Creating System Restore Point if one does not already exist. If one does, then you will receive a warning. Please wait..."
 Checkpoint-Computer -Description "Before using W10DebloaterGUI.ps1" 
