@@ -18,7 +18,10 @@ If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 #no errors throughout
 $ErrorActionPreference = 'silentlycontinue'
 
-$DebloatFolder = "C:\Temp\Windows10Debloater"
+#This allows it so that if you have your TEMP folder in a different spot, it can work
+$DebloatFolder = "$env:TEMP\Windows10Debloater"
+
+#If/Else Loop to check folder
 If (Test-Path $DebloatFolder) {
     Write-Output "$DebloatFolder exists. Skipping."
 }
